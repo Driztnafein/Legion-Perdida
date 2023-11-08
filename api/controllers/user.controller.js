@@ -20,21 +20,37 @@ module.exports.create = (req, res, next) => {
 
   module.exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
-        .then(user => {
-            if (!user) {
-                return res.status(401).json({ message: 'Email no encontrado.' });
+      .then((user) => {
+        if (user) {
+          user.checkPassword(req.body.password, user.password).then((match) => {
+            if (match) {
+              req.session.userId = user.id;
+              console.log('Login successful, session established:', req.session);
+              res.json(user);
+            } else {
+              console.log('Password does not match');
+              res.status(401).json({ error: "unauthorized" });
             }
-            bcrypt.compare(req.body.password, user.password)
-                .then(isMatch => {
-                    if (!isMatch) {
-                        return res.status(401).json({ message: 'Contraseña incorrecta.' });
-                    }
+          });
+        } else {
+          console.log('User not found');
+          res.status(401).json({ error: "unauthorized" });
+        }
+      })
+      .catch(next);
+  };
 
-                    const token = jwt.sign({ id: user._id }, 'secret_key', { expiresIn: '1h' }); // Debes usar una clave secreta segura y considerar guardarla en variables de entorno
-                    res.status(200).json({ message: 'Login exitoso.', token });
-                })
-                .catch(next);
-        })
-        .catch(next);
+module.exports.logout = (req, res, next) => {
+    req.session.destroy();
+    res.status(204).json();
 };
+
+
+  
+  
+  
+  
+  
+
+
 
