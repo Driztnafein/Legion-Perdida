@@ -12,6 +12,10 @@ const session = require('./config/session.config');
 
 const app = express();
 
+const cors = require("./config/cors.config");
+app.use(cors);
+
+
 app.use(express.static('public'));
 
 app.use(express.json());
