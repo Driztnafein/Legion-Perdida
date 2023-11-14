@@ -13,7 +13,7 @@ function LoginPage() {
   function handleLogin(data) {
     login(data).then((response) => {
       onLogin(response);
-      navigate("/game");
+      navigate("/");
     });
   }
 

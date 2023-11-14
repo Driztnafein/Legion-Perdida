@@ -23,8 +23,7 @@ function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <Link className="nav-link active" aria-current="page" to="/">Inicio</Link>
+                    <div className="navbar-nav">                        
                         <Link className="nav-link" to="/signup">Registro</Link>
                         <Link className="nav-link" to="/users/login">Login</Link>
                         <button className="nav-link btn btn-outline-secondary" onClick={handleLogout}>Logout</button>

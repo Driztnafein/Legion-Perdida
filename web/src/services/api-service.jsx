@@ -28,8 +28,33 @@ export function logout() {
 }
 
 export function list() {
-  return service.get("/games");
+  return service.get("/game");
 }
+
+export function detail(id) {
+  return service.get(`/game/${id}`);
+}
+
+export function createReservation(reservationData) {
+  return service.post("/reservation", reservationData);
+}
+
+export function listReservations() {
+  return service.get("/reservation");
+}
+
+export function getReservationDetail(id) {
+  return service.get(`/reservation/${id}`);
+}
+
+export function updateReservation(id, updateData) {
+  return service.patch(`/reservations/${id}`, updateData);
+}
+
+export function deleteReservation(id) {
+  return service.delete(`/reservations/${id}`);
+}
+
 
 
 
