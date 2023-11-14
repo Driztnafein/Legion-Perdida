@@ -9,7 +9,6 @@ const { isAdmin } = require("../middlewares/isAdminCheck.middleware");
 const { isOwnerOrAdmin } = require("../middlewares/isOwnerOrAdmin.middleware");
 
 
-
 router.post("/users", upload.single("avatar"), userController.create);
 router.post("/users/login", userController.login);  
 router.post("/users/logout", userController.logout);
@@ -19,11 +18,9 @@ router.patch("/users/:id", isAuthenticated, userController.update);
 router.delete("/users/:id", isAuthenticated,isAdmin, userController.delete);
 
 
-
-
 router.post("/game", isAuthenticated, isAdmin, gamesController.create);
-router.get("/game/:id", isAuthenticated, gamesController.detail);
-router.get("/game", isAuthenticated, gamesController.list);
+router.get("/game/:id", gamesController.detail);
+router.get("/game", gamesController.list);
 router.patch("/game/:id", isAuthenticated, isAdmin, gamesController.update);
 router.delete("/game/:id", isAuthenticated, isAdmin, gamesController.delete);
 
