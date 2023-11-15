@@ -24,6 +24,7 @@ module.exports.login = (req, res, next) => {
           if (match) {
             req.session.userId = user.id;
             console.log('Login successful, session established:', req.session);
+            console.log(user);
             res.json(user);
           } else {
             console.log('Password does not match');
