@@ -5,9 +5,10 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
-  function onLogin(user) {
-    localStorage.setItem("user", JSON.stringify(user));
-    setUser(user);
+  function onLogin(response) {
+    console.log("User object on login:", response.data);
+    localStorage.setItem("user", JSON.stringify(response.data));
+    setUser(response.data);
   }
 
   function onLogout() {

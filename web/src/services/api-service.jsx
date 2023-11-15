@@ -27,6 +27,31 @@ export function logout() {
   return service.post("/users/logout");
 }
 
+export function getUserDetail(userId) {
+  return service.get(`/users/${userId}`);
+}
+
+export function listUsers() {
+  return service.get("/users");
+}
+
+export function updateUser(userId, updateData) {
+  const formData = new FormData();
+  for (const key in updateData) {
+    formData.append(key, updateData[key]);
+  }
+  return service.patch(`/users/${userId}`, formData);
+}
+
+export function deleteUser(userId) {
+  return service.delete(`/users/${userId}`);
+}
+
+
+export function createGame(gameData) {
+  return service.post("/game", gameData);
+}
+
 export function list() {
   return service.get("/game");
 }
@@ -34,6 +59,15 @@ export function list() {
 export function detail(id) {
   return service.get(`/game/${id}`);
 }
+
+export function updateGame(gameId, updateData) {
+  return service.patch(`/game/${gameId}`, updateData);
+}
+
+export function deleteGame(gameId) {
+  return service.delete(`/game/${gameId}`);
+}
+
 
 export function createReservation(reservationData) {
   return service.post("/reservation", reservationData);

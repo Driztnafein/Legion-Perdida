@@ -14,6 +14,7 @@ function ReservationPage() {
     const [table, setTable] = useState(1);
     const [players, setPlayers] = useState(1);
     const [isReservationSuccess, setIsReservationSuccess] = useState(false);
+    const [reservationId, setReservationId] = useState(null);
     
 
     const handleDateChange = (newDate) => {
@@ -51,15 +52,19 @@ function ReservationPage() {
 
         };
         try {
-            await createReservation(reservationDetails);
+            const response = await createReservation(reservationDetails);
+            const reservationId = response.data.id; // Asume que la respuesta incluye el ID
             setIsReservationSuccess(true);
+            setReservationId(reservationId); // Guarda el ID en el estado
             console.log("Reserva creada:", reservationDetails);
         } catch (error) {
             console.error("Error al crear la reserva:", error);
         }
     };
     const handleViewReservation = () => {
-        navigate('/reservation/:id');
+        if (reservationId) {
+            navigate(`/reservation/${reservationId}`);
+        }
     };
 
     const combineDateTime = (hour) => {

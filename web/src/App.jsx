@@ -8,8 +8,8 @@ import { AuthProvider } from './contexts/auth';
 import HomePage from './pages/home/homePage';
 import GameDetail from './pages/games/game.detail';
 import ReservationPage from './pages/reservation/reservationPage';
-import ReservationDetailPage from './pages/reservation/reservatioDetail.page';
-
+import ReservationDetailPage from './pages/reservation/reservationDetail.page';
+import UserDetail from './pages/users/userDetail';
 
 function App() {
   return (
@@ -31,17 +31,23 @@ function App() {
                 <LoginPage />
               </Unauthenticated>
             } />
+          <Route path="/users/:id"
+            element={
+              <Authenticated>
+                <UserDetail />
+              </Authenticated>
+            } />
           <Route path="/reservations"
             element={
               <Authenticated>
                 <ReservationPage />
               </Authenticated>} />
-              <Route path="/reservations/:gameId" 
-              element={<Authenticated><ReservationPage />
+          <Route path="/reservations/:gameId" 
+            element={
+              <Authenticated>
+                <ReservationPage />
               </Authenticated>} />
-              <Route path="/reservation/:id" element={<ReservationDetailPage />} />
-              
-
+          <Route path="/reservation/:id" element={<ReservationDetailPage />} />
         </Routes>
       </div>
     </AuthProvider>

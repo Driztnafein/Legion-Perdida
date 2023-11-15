@@ -1,10 +1,9 @@
-
 import { useAuthContext } from '../src/contexts/auth';
 import { Link } from 'react-router-dom';
 import { logout } from '../src/services/api-service';
 
 function Navbar() {
-    const { onLogout } = useAuthContext();
+    const { user, onLogout } = useAuthContext();
 
     const handleLogout = async () => {
         try {
@@ -23,10 +22,18 @@ function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">                        
-                        <Link className="nav-link" to="/signup">Registro</Link>
-                        <Link className="nav-link" to="/users/login">Login</Link>
-                        <button className="nav-link btn btn-outline-secondary" onClick={handleLogout}>Logout</button>
+                    <div className="navbar-nav">
+                        {user ? (
+                            <>
+                                <Link className="nav-link" to="/users/profile">Perfil</Link>
+                                <button className="nav-link btn btn-outline-secondary" onClick={handleLogout}>Logout</button>
+                            </>
+                        ) : (
+                            <>
+                                <Link className="nav-link" to="/signup">Registro</Link>
+                                <Link className="nav-link" to="/users/login">Login</Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
