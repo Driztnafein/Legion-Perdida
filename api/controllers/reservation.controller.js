@@ -1,5 +1,8 @@
 const Reservation = require('../models/reservation.model');
 const createError = require('http-errors');
+const { sendInvitationEmail } = require('../config/nodemailer.config');
+const User = require('../models/user.model');
+
 
 module.exports.create = (req, res, next) => {
     Reservation.create({
@@ -11,10 +14,17 @@ module.exports.create = (req, res, next) => {
         duration: req.body.duration,
         players: req.body.players,
     })
-        .then((reservation) => {
-            res.status(201).json(reservation);
-        })
-        .catch(next);
+    .then((reservation) => {
+        createdReservation = reservation; // Guarda la reserva en la variable
+        return User.findById(req.session.userId); // Continúa con la búsqueda del usuario
+    })
+    .then((user) => {
+        if (user) {
+            sendInvitationEmail(user.email, createdReservation); // Usa la reserva guardada
+        }
+        res.status(201).json(createdReservation); // Envía la reserva como respuesta
+    })
+    .catch(next);
 };
 
 module.exports.list = (req, res, next) => {

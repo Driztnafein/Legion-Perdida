@@ -7,7 +7,9 @@ const reservationController = require("../controllers/reservation.controller");
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 const { isAdmin } = require("../middlewares/isAdminCheck.middleware");
 const { isOwnerOrAdmin } = require("../middlewares/isOwnerOrAdmin.middleware");
-
+const { sendInvitationEmail } = require("./nodemailer.config");
+const User = require("../models/user.model");
+const Reservation = require("../models/reservation.model");
 
 router.post("/users", upload.single("avatar"), userController.create);
 router.post("/users/login", userController.login);  
@@ -32,5 +34,25 @@ router.patch("/reservations/:id", isAuthenticated, isOwnerOrAdmin, reservationCo
 router.delete("/reservations/:id", isAuthenticated, isOwnerOrAdmin, reservationController.delete);
 
 
+router.post('/reservations/:id/send-invitations', (req, res, next) => {
+  const { userIds } = req.body;
+  const reservationId = req.params.id;
+
+  // Busca los detalles de la reserva
+  Reservation.findById(reservationId)
+    .then(reservation => {
+      // Busca los usuarios a los que se les enviarán las invitaciones
+      User.find({ _id: { $in: userIds } })
+        .then(users => {
+          users.forEach(user => {
+            // Envía las invitaciones con los detalles de la reserva
+            sendInvitationEmail(user.email, reservation);
+          });
+          res.status(200).json({ message: 'Invitaciones enviadas' });
+        })
+        .catch(next);
+    })
+    .catch(next);
+});
 
 module.exports = router;

@@ -8,3 +8,5 @@ mongoose.connect(mongodbUri)
     .catch(error => console.error(`An error ocurred trying to connect to database ${mongodbUri}`, error));
 
     
+
+    
