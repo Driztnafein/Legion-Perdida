@@ -16,27 +16,35 @@ function HomePage() {
     }, []);
 
     return (
-        <div>
-            <h1>Bienvenido a La Legión Perdida</h1>
-            <p>Probando, probando ! 1,2 ...si Hey! Hola!.</p>
+        <div className="container-fluid p-4" style={{ backgroundColor: '#212529', minHeight: '100vh' }}>
+            <h1 className="text-center text-white mb-4">Bienvenido a La Legión Perdida</h1>
+            <p className="text-center text-white mb-4">
+                Entra en el mundo de La Legión Perdida, donde miles de batallas y aventuras te esperan.
+                Descubre juegos que desafiarán tu mente y te llevarán a viajes inolvidables.
+            </p>
 
             {games.length > 0 ? (
                 <div className="row">
                     {games.map(game => (
-                        <div className="col-md-4 mb-4" key={game._id}>
-                        <Link to={`/game/${game._id}`} className="card-link">
-                            <div className="card h-100">
-                                <img className="card-img-top" src={game.imageUrl} alt={`Imagen de ${game.title}`} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{game.title}</h5>
+                        <div className="col-md-4 col-sm-6 mb-4" key={game._id}>
+                            <Link to={`/game/${game._id}`} className="text-decoration-none">
+                                <div className="card bg-secondary text-white">
+                                    <img 
+                                        className="card-img-top" 
+                                        src={game.imageUrl} 
+                                        alt={`Imagen de ${game.title}`} 
+                                        style={{ height: '200px', objectFit: 'contain' }}
+                                    />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{game.title}</h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                    </div>
+                            </Link>
+                        </div>
                     ))}
                 </div>
             ) : (
-                <p>Cargando juegos...</p>
+                <p className="text-center text-white">Cargando juegos...</p>
             )}
         </div>
     );

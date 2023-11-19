@@ -2,6 +2,8 @@ import { useAuthContext } from '../src/contexts/auth';
 import { Link } from 'react-router-dom';
 import { logout } from '../src/services/api-service';
 
+
+
 function Navbar() {
     const { user, onLogout } = useAuthContext();
 
@@ -15,7 +17,7 @@ function Navbar() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">La Legión Perdida</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,6 +28,7 @@ function Navbar() {
                         {user ? (
                             <>
                                 <Link className="nav-link" to="/users/profile">Perfil</Link>
+                                <Link className="nav-link" to="/user/reservations">Mis Reservas</Link> 
                                 <button className="nav-link btn btn-outline-secondary" onClick={handleLogout}>Logout</button>
                             </>
                         ) : (
@@ -40,5 +43,6 @@ function Navbar() {
         </nav>
     );
 }
+
 
 export default Navbar;

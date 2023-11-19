@@ -1,0 +1,190 @@
+
+.reservation-page h1 {
+    text-align: center;
+    margin: 20px 0;
+    
+}
+
+.reservation-page .react-calendar {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 800; /* Limita el ancho máximo */
+    background-color: #222; /* Fondo negro para el calendario */
+    color: #fff; /* Letra blanca para los días del calendario */
+    padding: 60px;
+
+}
+
+/* Estilos para días específicos y estados en el calendario */
+.reservation-page .react-calendar__month-view__days__day--weekend {
+    color: rgb(255, 60, 0); /* Fin de semana en naranja */
+}
+
+.reservation-page .react-calendar__tile:enabled:hover,
+.reservation-page .react-calendar__tile:enabled:focus {
+    background: #555; /* Fondo al pasar el ratón */
+    color: #f90; /* Letra naranja al pasar el ratón */
+}
+
+.reservation-page .react-calendar__tile--active,
+.reservation-page .react-calendar__tile--active:enabled:hover,
+.reservation-page .react-calendar__tile--active:enabled:focus {
+    background: #f90; /* Fondo naranja para el día seleccionado */
+    color: #222; /* Letra negra para el día seleccionado */
+}
+
+/* Estilos de navegación del calendario */
+.reservation-page .react-calendar__navigation {
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    align-items: center;
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
+}
+
+.reservation-page .react-calendar__navigation button {
+    margin: 7px; /* Espacio horizontal entre botones */
+    padding: 5px 10px; /* Padding reducido */
+    font-size: 6px; /* Tamaño de fuente normalizado */
+    flex: none; /* Anula cualquier propiedad flex anterior */
+}
+
+
+.reservation-page .react-calendar__navigation button[disabled] {
+    background-color: transparent;
+    color: #666; /* Estilo para botones deshabilitados */
+}
+
+.reservation-page .react-calendar__navigation button.react-calendar__navigation__prev-button,
+.reservation-page .react-calendar__navigation button.react-calendar__navigation__next-button {
+    flex-grow: 0; /* No permitir que los botones crezcan */
+    min-width: 30px; /* Establece un ancho mínimo para los botones */
+    white-space: nowrap; /* Evita que el texto del botón se envuelva */
+}
+
+.reservation-page .react-calendar__navigation button.react-calendar__navigation__label {
+    padding: 5px 10px; /* Padding consistente con otros botones */
+    flex-grow: 0; /* No permitir que el botón crezca */
+    white-space: nowrap; /* Evita que el texto del botón se envuelva */
+}
+
+/* Estilos para selectores y botones en la página de reserva */
+.reservation-page select,
+.reservation-page button {
+    background-color: #222; /* Fondo negro */
+    color: #fff; /* Letra blanca */
+
+    padding: 5px; /* Espaciado interno */
+    cursor: pointer; /* Cursor en forma de mano */
+}
+
+.reservation-page button:hover {
+    background-color: #e70; /* Fondo al pasar el ratón por botones */
+}
+
+/* Estilos para mensajes de éxito en la página de reserva */
+.reservation-page .success-message {
+    background-color: #282; /* Fondo para mensaje de éxito */
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+}
+.reservation-page .react-calendar__month-view__weekdays {
+    text-align: center; /* Centra el texto de los encabezados de los días de la semana */
+}
+
+.reservation-page .react-calendar__month-view__weekdays__weekday {
+    padding: 5px 0; /* Añade padding para asegurar que la altura sea adecuada */
+} 
+
+.reservation-page button {
+    margin: 3px;
+    background-color: #6f876f;
+    border: 0;
+    border-radius: 3px;
+    color: white;
+    padding: 5px 0;
+    
+  }
+  
+  .reservation-page button:hover {
+    background-color: #556b55;
+  }
+  
+  .reservation-page button:active {
+    background-color: #a5c1a5;
+  }
+
+  .reservation-page .react-calendar__month-view__days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 14.28%); /* Asegura 7 columnas de igual anchura */
+    max-width: 100%; /* Asegura que el calendario no se extienda más allá de su contenedor */
+    
+}
+
+.reservation-page .react-calendar__tile {
+    max-width: initial !important;
+}
+
+.reservation-page .react-calendar__navigation button {
+    
+    font-size: 19px; /* Aumenta el tamaño de la fuente de los botones de flecha */
+   
+}
+
+/* Si los botones usan íconos en lugar de texto, podrías necesitar ajustar el tamaño del ícono */
+.reservation-page .react-calendar__navigation button i {
+    font-size: 100px; /* Ajusta según sea necesario */
+}
+
+.reservation-page .react-calendar__year-view__months,
+.reservation-page .react-calendar__decade-view__years,
+.reservation-page .react-calendar__century-view__decades {
+    display: grid !important;
+    grid-template-columns: repeat(5, 20%); /* Cuadrícula de 5 columnas para vistas de década y siglo */
+}
+
+.reservation-page .react-calendar__year-view__months {
+    grid-template-columns: repeat(3, 33.33%); /* Cuadrícula de 3 columnas para vista anual */
+}
+
+.reservation-page .react-calendar__tile {
+    max-width: initial !important; /* Asegura que las tiles no estén limitadas en ancho */
+}
+
+.calendar-container {
+    margin: auto;
+    max-width: 800px; /* Limita el ancho del calendario */
+  
+}
+.reservation-details {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+
+.reservation-field {
+    display: flex;
+    flex-direction: column; /* Apila la etiqueta y el selector verticalmente */
+    align-items: center; /* Centra los elementos */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Centra el botón horizontalmente */
+    margin-top: 20px; /* Espacio encima del botón */
+}
+
+.create-reservation-button {
+    padding: 15px 30px; /* Aumenta el tamaño del botón */
+    font-size: 1.2em; /* Aumenta el tamaño del texto dentro del botón */
+    border: none; /* Elimina el borde del botón */
+    border-radius: 5px; /* Bordes redondeados para el botón */
+    background-color: #4CAF50; /* Color de fondo para el botón */
+    color: rgb(18, 16, 16); /* Color del texto */
+    cursor: pointer; /* Cursor en forma de mano al pasar el ratón */
+    transition: background-color 0.3s; /* Transición suave para el efecto hover */
+}
+
+.create-reservation-button:hover {
+    background-color: #45a049; /* Color del botón al pasar el ratón */
+}

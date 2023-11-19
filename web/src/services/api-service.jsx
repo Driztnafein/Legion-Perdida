@@ -89,6 +89,10 @@ export function deleteReservation(id) {
   return service.delete(`/reservations/${id}`);
 }
 
+export function sendUserInvitations(reservationId, userIds) {
+  return service.post(`/reservations/${reservationId}/send-invitations`, { userIds });
+}
+
 
 
 

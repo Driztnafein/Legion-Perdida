@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import { createReservation } from '../../services/api-service';
+import "../../css/ReservationPage.css"
+
+
 
 
 function ReservationPage() {
@@ -15,7 +17,7 @@ function ReservationPage() {
     const [players, setPlayers] = useState(1);
     const [isReservationSuccess, setIsReservationSuccess] = useState(false);
     const [reservationId, setReservationId] = useState(null);
-    
+
 
     const handleDateChange = (newDate) => {
         setDate(newDate);
@@ -41,9 +43,9 @@ function ReservationPage() {
         const reservationStart = combineDateTime(startHour);
         const reservationEnd = combineDateTime(endHour);
         const duration = (reservationEnd - reservationStart) / (1000 * 60 * 60); // Duración en horas
-     
+
         const reservationDetails = {
-         
+
             game: gameId,
             startTime: reservationStart,
             duration: duration,
@@ -72,38 +74,42 @@ function ReservationPage() {
     };
 
     return (
-        <div>
+        <div className="reservation-page">
             <h1>Bienvenido a la página de reservas</h1>
-            <div>
+            <div className="calendar-container">
                 <Calendar
                     onChange={handleDateChange}
                     value={date}
                 />
             </div>
-            <div>
-                <label>
-                    Hora de inicio:
-                    <select value={startHour} onChange={handleStartHourChange}>
-                        {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
-                            <option key={hour} value={hour}>
-                                {hour}:00
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label>
-                    Hora de finalización:
-                    <select value={endHour} onChange={handleEndHourChange}>
-                        {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
-                            <option key={hour} value={hour}>
-                                {hour}:00
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                <div>
+
+            <div className="reservation-details">
+                <div className="reservation-field">
+                    <label>
+                        Hora de inicio:
+                        <select value={startHour} onChange={handleStartHourChange}>
+                            {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
+                                <option key={hour} value={hour}>
+                                    {hour}:00
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+
+                <div className="reservation-field">
+                    <label>
+                        Hora de finalización:
+                        <select value={endHour} onChange={handleEndHourChange}>
+                            {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
+                                <option key={hour} value={hour}>
+                                    {hour}:00
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+                <div className="reservation-field">
                     <label>
                         Mesa:
                         <select value={table} onChange={handleTableChange}>
@@ -115,7 +121,7 @@ function ReservationPage() {
                         </select>
                     </label>
                 </div>
-                <div>
+                <div className="reservation-field">
                     <label>
                         Número de jugadores:
                         <select value={players} onChange={handlePlayersChange}>
@@ -127,16 +133,21 @@ function ReservationPage() {
                         </select>
                     </label>
                 </div>
+
+
             </div>
-            <button onClick={handleSubmit}>Crear reserva</button>
+            <div className="button-container">
+                <button onClick={handleSubmit} className="create-reservation-button">Crear reserva</button>
+            </div>            
             {isReservationSuccess && (
                 <div style={{ marginTop: '20px', backgroundColor: 'lightgreen', padding: '10px', textAlign: 'center' }}>
                     <p>¡Reserva creada con éxito!</p>
                     <button onClick={handleViewReservation}>Ver Reserva</button>
                 </div>
             )}
-
         </div>
+
+
     );
 }
 

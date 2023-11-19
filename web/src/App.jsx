@@ -10,6 +10,7 @@ import GameDetail from './pages/games/game.detail';
 import ReservationPage from './pages/reservation/reservationPage';
 import ReservationDetailPage from './pages/reservation/reservationDetail.page';
 import UserDetail from './pages/users/userDetail';
+import UserReservations from './pages/users/userReservations';
 
 function App() {
   return (
@@ -31,6 +32,11 @@ function App() {
                 <LoginPage />
               </Unauthenticated>
             } />
+          <Route path="/user/reservations"
+            element={
+              <Authenticated>
+                <UserReservations />
+              </Authenticated>} />
           <Route path="/users/:id"
             element={
               <Authenticated>
@@ -42,12 +48,17 @@ function App() {
               <Authenticated>
                 <ReservationPage />
               </Authenticated>} />
-          <Route path="/reservations/:gameId" 
+          <Route path="/reservations/:gameId"
             element={
               <Authenticated>
                 <ReservationPage />
               </Authenticated>} />
-          <Route path="/reservation/:id" element={<ReservationDetailPage />} />
+          <Route path="/reservation/:id"
+            element={
+              <Authenticated>
+                <ReservationDetailPage />
+              </Authenticated>} />
+
         </Routes>
       </div>
     </AuthProvider>
