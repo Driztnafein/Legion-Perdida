@@ -17,19 +17,31 @@ const sendInvitationEmail = (email, reservationDetails) => {
     throw new Error('Datos de reserva inválidos. Se esperaba un objeto con la propiedad "game".');
   }
 
+  const reservationDate = new Date(reservationDetails.reservationDate).toLocaleDateString('es-ES');
+  const reservationTime = new Date(reservationDetails.startTime).toLocaleTimeString('es-ES');
+
   const mailOptions = {
     from: process.env.ETHEREAL_USER, // Utiliza el email de autenticación como remitente
     to: email,
-    subject: 'Invitación a evento',
-    text: `Has sido invitado a ${reservationDetails.game.title} el ${reservationDetails.reservationDate}.`,
+    subject: 'Llamada a las armas',
+    text: `Has sido convocado para  ${reservationDetails.duration} horas aproximadamente. Fecha: ${reservationDate}, Hora: ${reservationTime}, Mesa: ${reservationDetails.table}. Esperamos verte allí!`,
     html: `
-      <h1>Has sido invitado a ${reservationDetails.game.title}</h1>
-      <p>Fecha: ${reservationDetails.reservationDate}</p>
-      <p>Hora: ${reservationDetails.startTime}</p>
+      <h1>Has sido convocado</h1>
+      <p>Aproximadamente para ${reservationDetails.duration} horas.</p>
+      <p>Fecha: ${reservationDate}</p>
+      <p>Hora: ${reservationTime}</p>
       <p>Mesa: ${reservationDetails.table}</p>
-      <p>Esperamos verte allí!</p>
+      <p>¡No olvides tus dados!</p>
     `,
   };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error al enviar el correo electrónico:', error);
+    } else {
+      console.log('Correo de confirmación enviado: ' + info.response);
+    }
+  });
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
