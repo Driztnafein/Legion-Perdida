@@ -1,4 +1,5 @@
 const Game = require('../models/game.model');
+const Reservation = require('../models/reservation.model');
 
 module.exports.create = (req, res, next) => {
     Game.create({
@@ -69,3 +70,20 @@ module.exports.detail = (req, res, next) => {
         })
         .catch(next);
 }
+
+module.exports.getGameAvailability = (req, res, next) => {
+    const { gameId } = req.params;
+
+    Reservation.find({
+        game: gameId
+    })
+    .then(reservations => {
+        // Mapea cada reserva a un objeto con solo la fecha de la reserva
+        const dates = reservations.map(r => {
+            const date = new Date(r.reservationDate);
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        });
+        res.status(200).json(dates);
+    })
+    .catch(next);
+};

@@ -1,10 +1,12 @@
 const Reservation = require('../models/reservation.model');
 const createError = require('http-errors');
-const { sendInvitationEmail } = require('../config/nodemailer.config');
+const  {sendInvitationEmail}  = require('../config/nodemailer.config');
 const User = require('../models/user.model');
 
 
 module.exports.create = (req, res, next) => {
+    let createdReservation;
+
     Reservation.create({
         user: req.session.userId,
         game: req.body.game,
@@ -14,21 +16,21 @@ module.exports.create = (req, res, next) => {
         duration: req.body.duration,
         players: req.body.players,
     })
-    .then((reservation) => {
-        createdReservation = reservation; // Guarda la reserva en la variable
-        return User.findById(req.session.userId); // Continúa con la búsqueda del usuario
+    .then(reservation => {
+        createdReservation = reservation; // Guarda la reserva en una variable
+        return User.findById(req.session.userId); // Busca el usuario basado en la sesión
     })
-    .then((user) => {
+    .then(user => {
         if (user) {
-            sendInvitationEmail(user.email, createdReservation); // Usa la reserva guardada
+            sendInvitationEmail(user.email, createdReservation); // Envia un email al usuario
         }
-        res.status(201).json(createdReservation); // Envía la reserva como respuesta
+        res.status(201).json(createdReservation); // Responde con la reserva creada
     })
-    .catch(next);
+    .catch(next); // Maneja cualquier error
 };
 
 module.exports.list = (req, res, next) => {
-    Reservation.find()
+    Reservation.find({ user: req.user.id }) // Filtra las reservas por el ID del usuario
         .populate('user')
         .populate('game')
         .then((reservations) => {
@@ -85,4 +87,11 @@ module.exports.delete = (req, res, next) => {
         .catch(next);
 };
 
-
+module.exports.listUserReservations = (req, res, next) => {
+    Reservation.find({ user: req.user.id })
+        .then((reservations) => {
+            const dates = reservations.map(reservation => reservation.reservationDate);
+            res.status(200).json(dates);
+        })
+        .catch(next);
+};

@@ -22,7 +22,13 @@ const sendInvitationEmail = (email, reservationDetails) => {
     to: email,
     subject: 'Invitación a evento',
     text: `Has sido invitado a ${reservationDetails.game.title} el ${reservationDetails.reservationDate}.`,
-    // Puedes utilizar la propiedad 'html' para enviar un correo con formato HTML.
+    html: `
+      <h1>Has sido invitado a ${reservationDetails.game.title}</h1>
+      <p>Fecha: ${reservationDetails.reservationDate}</p>
+      <p>Hora: ${reservationDetails.startTime}</p>
+      <p>Mesa: ${reservationDetails.table}</p>
+      <p>Esperamos verte allí!</p>
+    `,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

@@ -16,7 +16,7 @@ const cors = require("./config/cors.config");
 app.use(cors);
 
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.use(express.json());
 app.use(logger('dev'));
