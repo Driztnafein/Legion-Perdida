@@ -5,6 +5,16 @@
     
 }
 
+.reservation-page .react-calendar__month-view__days__day.user-reserved-day {
+    background-color: lightgreen; /* Color de fondo para días reservados por el usuario actual */
+    color: white; /* Color del texto */
+}
+
+.reservation-page .react-calendar__month-view__days__day.other-reserved-day {
+    background-color: #ffaaaa; /* Color de fondo para días reservados por otros usuarios */
+    color: white; /* Color del texto */
+}
+
 .reservation-page .react-calendar {
     width: 100%; /* Ocupa todo el ancho disponible */
     max-width: 800; /* Limita el ancho máximo */

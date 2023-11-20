@@ -11,6 +11,7 @@ import ReservationPage from './pages/reservation/reservationPage';
 import ReservationDetailPage from './pages/reservation/reservationDetail.page';
 import UserDetail from './pages/users/userDetail';
 import UserReservations from './pages/users/userReservations';
+import EditUser from './pages/users/userEdit';
 
 function App() {
   return (
@@ -43,6 +44,12 @@ function App() {
                 <UserDetail />
               </Authenticated>
             } />
+          <Route path="/users/:id/edit"
+            element={
+              <Authenticated>
+                <EditUser />
+              </Authenticated>
+            } />
           <Route path="/reservations"
             element={
               <Authenticated>
@@ -58,6 +65,8 @@ function App() {
               <Authenticated>
                 <ReservationDetailPage />
               </Authenticated>} />
+              
+
 
         </Routes>
       </div>

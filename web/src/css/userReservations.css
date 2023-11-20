@@ -1,0 +1,12 @@
+.card-img-top {
+  height: 200px; /* Altura fija */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+}
+.card {
+  height: 100%; /* Hace que todas las tarjetas tengan la misma altura */
+}
+.card-deck {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}

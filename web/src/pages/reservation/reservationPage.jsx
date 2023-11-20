@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
-import { createReservation } from '../../services/api-service';
+import { createReservation, getGameAvailability, getUserReservationDates } from '../../services/api-service';
 import "../../css/ReservationPage.css"
+import { useEffect } from 'react';
+import { useAuthContext } from '../../contexts/auth';
+
+
 
 
 
@@ -10,14 +14,47 @@ import "../../css/ReservationPage.css"
 function ReservationPage() {
     const navigate = useNavigate();
     const { gameId } = useParams(); // Obtiene el ID del juego desde la URL    
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(null);
     const [startHour, setStartHour] = useState(10);
     const [endHour, setEndHour] = useState(11);
     const [table, setTable] = useState(1);
     const [players, setPlayers] = useState(1);
     const [isReservationSuccess, setIsReservationSuccess] = useState(false);
     const [reservationId, setReservationId] = useState(null);
+    const [availability, setAvailability] = useState([]);
+    const [reservedDates, setReservedDates] = useState([]);
+    const { user } = useAuthContext();
+    const userId = user?.id;
+    const [userReservationDates, setUserReservationDates] = useState([]);
+    const [gameAvailabilityDates, setGameAvailabilityDates] = useState([]);
+    
 
+    useEffect(() => {
+        getGameAvailability(gameId)
+            .then(response => {
+                const dates = response.data.map(d => {
+                    const date = new Date(d);
+                    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                });
+                setGameAvailabilityDates(dates); // Aquí cambiamos a setGameAvailabilityDates
+            })
+            .catch(error => {
+                console.error("Error al obtener la disponibilidad del juego:", error);
+            });
+            
+        getUserReservationDates(userId)
+            .then(response => {
+                const dates = response.data.map(d => {
+                    const date = new Date(d);
+                    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                });
+                setUserReservationDates(dates); // Aquí cambiamos a setUserReservationDates
+            })
+            .catch(error => {
+                console.error("Error al obtener las fechas de reserva del usuario:", error);
+            });
+    }, [gameId, userId]);  
+    
 
     const handleDateChange = (newDate) => {
         setDate(newDate);
@@ -39,30 +76,75 @@ function ReservationPage() {
         setPlayers(event.target.value);
     };
 
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month') {
+            const isReserved = reservedDates.some(
+                reservedDate =>
+                    reservedDate.getFullYear() === date.getFullYear() &&
+                    reservedDate.getMonth() === date.getMonth() &&
+                    reservedDate.getDate() === date.getDate()
+            );
+            return isReserved ? 'reserved-day' : null;
+        }
+    };
+
+    const tileDisabled = ({ date, view }) => {
+      
+        if (view === 'month') {
+            return reservedDates.some(reservedDate => {
+                const isSameDay =
+                    reservedDate.getUTCFullYear() === date.getFullYear() &&
+                    reservedDate.getUTCMonth() === date.getMonth() &&
+                    reservedDate.getUTCDate() === date.getDate();
+                console.log(`Fecha: ${date.toDateString()}, Deshabilitado: ${isSameDay}`); // Para depuración
+                return isSameDay;
+            });
+        }
+    };
+
+    function ReservationPage() {
+        // ...
+    
+        const getDayClassName = (date) => {
+            if (userReservationDates.includes(date)) {
+                return 'user-reserved-day';
+            } else if (gameAvailabilityDates.includes(date)) {
+                return 'other-reserved-day';
+            } else {
+                return '';
+            }
+        }
+    
+        // ...
+    }
+
     const handleSubmit = async () => {
-        const reservationStart = combineDateTime(startHour);
-        const reservationEnd = combineDateTime(endHour);
-        const duration = (reservationEnd - reservationStart) / (1000 * 60 * 60); // Duración en horas
+        if (!date) {
+            alert('Por favor, selecciona una fecha.');
+            return;
+        }
+
+        const reservationStart = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startHour);
+        const reservationEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endHour);
+        const duration = (reservationEnd - reservationStart) / (1000 * 60 * 60);
 
         const reservationDetails = {
-
             game: gameId,
-            startTime: reservationStart,
-            duration: duration,
-            table: table,
-            players: players,
-
+            reservationDate: date.toISOString(), // Usa la fecha seleccionada para establecer reservationDate
+            startTime: reservationStart.toISOString(),
+            duration,
+            table,
+            players
         };
+
         try {
             const response = await createReservation(reservationDetails);
-            const reservationId = response.data.id; // Asume que la respuesta incluye el ID
-            setIsReservationSuccess(true);
-            setReservationId(reservationId); // Guarda el ID en el estado
-            console.log("Reserva creada:", reservationDetails);
+            // Continúa con tu lógica después de una reserva exitosa
         } catch (error) {
             console.error("Error al crear la reserva:", error);
         }
     };
+
     const handleViewReservation = () => {
         if (reservationId) {
             navigate(`/reservation/${reservationId}`);
@@ -73,6 +155,28 @@ function ReservationPage() {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour);
     };
 
+    
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Asegura que el mes siempre tenga dos dígitos
+        const day = ('0' + date.getDate()).slice(-2); // Asegura que el día siempre tenga dos dígitos
+        return `${year}-${month}-${day}`;
+    }
+    
+    const getDayClassName = (date) => {
+        const formattedDate = formatDate(date);
+        if (userReservationDates.map(formatDate).includes(formattedDate)) {
+            return 'user-reserved-day';
+        } else if (gameAvailabilityDates.map(formatDate).includes(formattedDate)) {
+            return 'other-reserved-day';
+        } else {
+            return '';
+        }
+    }
+
+
+
+
     return (
         <div className="reservation-page">
             <h1>Bienvenido a la página de reservas</h1>
@@ -80,6 +184,15 @@ function ReservationPage() {
                 <Calendar
                     onChange={handleDateChange}
                     value={date}
+                    
+                    tileClassName={({ date, view }) => view === 'month' ? getDayClassName(date) : null}
+                    tileDisabled={({ date, view }) =>
+                        view === 'month' && reservedDates.some(reservedDate =>
+                            reservedDate.getFullYear() === date.getFullYear() &&
+                            reservedDate.getMonth() === date.getMonth() &&
+                            reservedDate.getDate() === date.getDate()
+                        )
+                    }
                 />
             </div>
 
@@ -138,7 +251,7 @@ function ReservationPage() {
             </div>
             <div className="button-container">
                 <button onClick={handleSubmit} className="create-reservation-button">Crear reserva</button>
-            </div>            
+            </div>
             {isReservationSuccess && (
                 <div style={{ marginTop: '20px', backgroundColor: 'lightgreen', padding: '10px', textAlign: 'center' }}>
                     <p>¡Reserva creada con éxito!</p>

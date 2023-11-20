@@ -1,0 +1,36 @@
+/* navbar.css */
+.navbar-custom {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Gradiente oscuro con naranja */
+    border-radius: 10px;
+    border: none;
+}
+
+.navbar-custom .navbar-nav .nav-link,
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-toggler-icon {
+    color: white;
+}
+
+.navbar-custom .dropdown-menu {
+    border-radius: 5px;
+    background-color: #333;
+}
+
+.navbar-custom .dropdown-item {
+    color: #ff7e5f; /* Naranja claro para los elementos del menú desplegable */
+}
+
+.navbar-custom .dropdown-item:hover {
+    background-color: #555;
+}
+
+/* Para el botón de cerrar sesión */
+.logout-btn {
+    color: #ff7e5f; /* Naranja claro para el botón de cerrar sesión */
+    background: none;
+    border: none;
+}
+
+.logout-btn:hover {
+    color: #ffa07a; /* Naranja más claro al pasar el mouse */
+}

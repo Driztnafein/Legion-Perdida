@@ -16,10 +16,16 @@ export function AuthProvider({ children }) {
     setUser(null);
   }
 
+  function updateUser(updatedUser) {
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  }
+
   const value = {
     user,
     onLogin,
     onLogout,
+    updateUser,  // Agrega esta línea
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

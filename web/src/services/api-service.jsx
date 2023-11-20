@@ -1,9 +1,15 @@
 import axios from 'axios';
+import moment from 'moment';
 
 const service = axios.create({
   withCredentials: true,
   baseURL: import.meta.env.REACT_APP_BASE_API_URL || "http://localhost:3000/v1",
 });
+
+
+const date = new Date();
+const formattedDate = moment(date).format('YYYY-MM-DD');
+console.log(formattedDate);  // Imprime la fecha en formato 'YYYY-MM-DD'
 
 export function create(body) {
   const formData = new FormData();
@@ -35,13 +41,14 @@ export function listUsers() {
   return service.get("/users");
 }
 
-export function updateUser(userId, updateData) {
-  const formData = new FormData();
-  for (const key in updateData) {
-    formData.append(key, updateData[key]);
-  }
-  return service.patch(`/users/${userId}`, formData);
+export function updateUser(userId, formData) {
+  return service.patch(`/users/${userId}`, formData, {
+      headers: {
+          'Content-Type': 'multipart/form-data'
+      }
+  });
 }
+
 
 export function deleteUser(userId) {
   return service.delete(`/users/${userId}`);
@@ -81,6 +88,10 @@ export function getReservationDetail(id) {
   return service.get(`/reservation/${id}`);
 }
 
+export function getUserReservationDates(userId) {
+  return service.get(`/users/${userId}/reservations-date`);
+}
+
 export function updateReservation(id, updateData) {
   return service.patch(`/reservations/${id}`, updateData);
 }
@@ -93,7 +104,11 @@ export function sendUserInvitations(reservationId, userIds) {
   return service.post(`/reservations/${reservationId}/send-invitations`, { userIds });
 }
 
+export function getGameAvailability(gameId, date) {
+  // Convertir la fecha a una cadena en formato 'YYYY-MM-DD'
+  const dateString = date ? date.toISOString().split('T')[0] : undefined;
 
-
+  return service.get(`/games/${gameId}/availability`, { params: { date: dateString } });
+}
 
 

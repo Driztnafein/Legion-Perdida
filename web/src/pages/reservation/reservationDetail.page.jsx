@@ -18,6 +18,7 @@ function ReservationDetail() {
     }, [id]);
 
     if (!reservation) return <div>Loading...</div>;
+    
 
     return (
         <div>

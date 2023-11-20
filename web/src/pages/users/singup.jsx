@@ -59,7 +59,7 @@ const RegisterForm = () => {
                         type="password"
                         className="form-control"
                         id="confirmPassword"
-                        {...register("confirmPassword", { 
+                        {...register("confirmPassword", {
                             required: "Este campo es obligatorio",
                             validate: value =>
                                 value === getValues("password") || "Las contraseñas no coinciden"
@@ -67,6 +67,16 @@ const RegisterForm = () => {
                     />
                     {errors.confirmPassword && <span className="text-danger">{errors.confirmPassword.message}</span>}
                 </div>
+                <div className="mb-3">
+                    <label htmlFor="avatar" className="form-label">Avatar:</label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="avatar"
+                        {...register("avatar")}
+                    />
+                </div>
+
 
                 <button type="submit" className="btn btn-primary">Registrarse</button>
                 <Link className="btn btn-link" to="/users/login">¿Ya tienes cuenta? Inicia sesión</Link>
