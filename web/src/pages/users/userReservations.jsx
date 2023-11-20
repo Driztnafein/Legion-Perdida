@@ -54,7 +54,7 @@ function UserReservations() {
               <img src={reservation.game.imageUrl} className="card-img-top" alt={`Imagen de ${reservation.game.title}`} />
               <div className="card-body">
                 <h5 className="card-title">{reservation.game.title}</h5>
-                <p className="card-text">Fecha: {new Date(reservation.reservationDate).toLocaleDateString()}</p>
+                <p className="card-text">Fecha de convocatoria: {new Date(reservation.reservationDate).toLocaleDateString()}</p>
                 <p className="card-text">Hora: {new Date(reservation.startTime).toLocaleTimeString()}</p>
                 <p className="card-text">Mesa: {reservation.table}</p>
                 <p className="card-text">Jugadores: {reservation.players}</p>
