@@ -1,0 +1,53 @@
+/* Estilos específicos para la sección "¿Quiénes somos?" */
+.home-page {
+    
+}
+   
+.home-page .who-we-are-section {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Gradiente oscuro con naranja */
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.home-page .who-we-are-section h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #fff; /* Asegura que el texto sea visible */
+}
+
+.home-page .who-we-are-section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    text-align: justify;
+    color: #fff; /* Asegura que el texto sea visible */
+    margin-bottom: 15px;
+}
+
+/* Estilos para las tarjetas de juegos */
+.home-page .card {
+    background: #000; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border-radius: 10px; /* Borde redondeado */
+    overflow: hidden; /* Elimina las esquinas del borde */
+    margin-bottom: 30px; /* Margen inferior */
+    border: none; /* Quita el borde */
+}
+
+.home-page .card-img-top {
+    height: 200px; /* Altura fija */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.home-page .card-title {
+    text-align: center; /* Centra el título de la tarjeta */
+    color: #fff; /* Color del texto */
+    background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.home-page .card-body {
+    padding: 10px 20px; /* Padding interno */
+}

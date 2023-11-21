@@ -27,7 +27,7 @@ function ReservationPage() {
     const userId = user?.id;
     const [userReservationDates, setUserReservationDates] = useState([]);
     const [gameAvailabilityDates, setGameAvailabilityDates] = useState([]);
-    
+
 
     useEffect(() => {
         getGameAvailability(gameId)
@@ -41,7 +41,7 @@ function ReservationPage() {
             .catch(error => {
                 console.error("Error al obtener la disponibilidad del juego:", error);
             });
-            
+
         getUserReservationDates(userId)
             .then(response => {
                 const dates = response.data.map(d => {
@@ -53,8 +53,8 @@ function ReservationPage() {
             .catch(error => {
                 console.error("Error al obtener las fechas de reserva del usuario:", error);
             });
-    }, [gameId, userId]);  
-    
+    }, [gameId, userId]);
+
 
     const handleDateChange = (newDate) => {
         setDate(newDate);
@@ -89,22 +89,16 @@ function ReservationPage() {
     };
 
     const tileDisabled = ({ date, view }) => {
-      
         if (view === 'month') {
-            return reservedDates.some(reservedDate => {
-                const isSameDay =
-                    reservedDate.getUTCFullYear() === date.getFullYear() &&
-                    reservedDate.getUTCMonth() === date.getMonth() &&
-                    reservedDate.getUTCDate() === date.getDate();
-                console.log(`Fecha: ${date.toDateString()}, Deshabilitado: ${isSameDay}`); // Para depuración
-                return isSameDay;
-            });
+            const formattedDate = formatDate(date);
+            return userReservationDates.map(formatDate).includes(formattedDate) ||
+                gameAvailabilityDates.map(formatDate).includes(formattedDate);
         }
     };
 
     function ReservationPage() {
         // ...
-    
+
         const getDayClassName = (date) => {
             if (userReservationDates.includes(date)) {
                 return 'user-reserved-day';
@@ -114,7 +108,7 @@ function ReservationPage() {
                 return '';
             }
         }
-    
+
         // ...
     }
 
@@ -155,24 +149,31 @@ function ReservationPage() {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour);
     };
 
-    
+
     const formatDate = (date) => {
         const year = date.getFullYear();
         const month = ('0' + (date.getMonth() + 1)).slice(-2); // Asegura que el mes siempre tenga dos dígitos
         const day = ('0' + date.getDate()).slice(-2); // Asegura que el día siempre tenga dos dígitos
         return `${year}-${month}-${day}`;
     }
-    
+
     const getDayClassName = (date) => {
         const formattedDate = formatDate(date);
-        if (userReservationDates.map(formatDate).includes(formattedDate)) {
-            return 'user-reserved-day';
-        } else if (gameAvailabilityDates.map(formatDate).includes(formattedDate)) {
-            return 'other-reserved-day';
+        const isUserReserved = userReservationDates.map(formatDate).includes(formattedDate);
+        const isGameReserved = gameAvailabilityDates.map(formatDate).includes(formattedDate);
+
+        if (isUserReserved) {
+            return 'user-reserved-day disabled-day'; // Combina las clases para días reservados por el usuario y deshabilitados
+        } else if (isGameReserved) {
+            return 'other-reserved-day disabled-day'; // Combina las clases para días reservados por otros y deshabilitados
         } else {
             return '';
         }
-    }
+    };
+
+
+
+
 
 
 
@@ -184,16 +185,10 @@ function ReservationPage() {
                 <Calendar
                     onChange={handleDateChange}
                     value={date}
-                    
                     tileClassName={({ date, view }) => view === 'month' ? getDayClassName(date) : null}
-                    tileDisabled={({ date, view }) =>
-                        view === 'month' && reservedDates.some(reservedDate =>
-                            reservedDate.getFullYear() === date.getFullYear() &&
-                            reservedDate.getMonth() === date.getMonth() &&
-                            reservedDate.getDate() === date.getDate()
-                        )
-                    }
+                    tileDisabled={tileDisabled}
                 />
+
             </div>
 
             <div className="reservation-details">

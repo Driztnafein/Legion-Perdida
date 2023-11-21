@@ -8,6 +8,8 @@ function UserReservations() {
   const [currentReservation, setCurrentReservation] = useState(null);
   const [reservations, setReservations] = useState([]);
   const [showUserSelector, setShowUserSelector] = useState(false); // Estado para controlar la visibilidad del UserSelector
+  const [isInvitationSent, setIsInvitationSent] = useState(false);
+
 
   useEffect(() => {
     listReservations()
@@ -24,28 +26,33 @@ function UserReservations() {
     setShowUserSelector(true); // Abre el UserSelector
   };
 
-  const handleUserSelection = (selectedUsers) => {
-    if (currentReservation) {
-        
-      
-      sendUserInvitations(currentReservation.id, selectedUsers) // Envía solo el ID de la reserva
-        .then(response => {
-          console.log('Invitaciones enviadas', response.data);
-          // Mostrar mensaje de éxito
-        })
-        .catch(error => {
-          console.error('Error al enviar invitaciones', error);
-          // Mostrar mensaje de error
-        });
-      setShowUserSelector(false); // Cierra el UserSelector
-    } else {
-      console.error('No hay una reserva seleccionada');
-      // Manejar este error en la UI si es necesario
-    }
-  };
+const handleUserSelection = (selectedUsers) => {
+  if (currentReservation) {
+    sendUserInvitations(currentReservation.id, selectedUsers)
+      .then(response => {
+        console.log('Invitaciones enviadas', response.data);
+        setIsInvitationSent(true); // Actualiza el estado para mostrar el mensaje
+        // Puedes restablecer el mensaje después de un tiempo
+        setTimeout(() => setIsInvitationSent(false), 3000);
+      })
+      .catch(error => {
+        console.error('Error al enviar invitaciones', error);
+        // Manejar el error
+      });
+    setShowUserSelector(false);
+  } else {
+    console.error('No hay una reserva seleccionada');
+    // Manejar este error en la UI si es necesario
+  }
+};
 
   return (
-    <div className="container mt-4">
+  <div className="container mt-4 user-reservations">
+    {isInvitationSent && (
+        <div className="alert alert-success" role="alert">
+          Invitaciones enviadas con éxito.
+        </div>
+      )}
       <h1 className="text-center mb-4">Mis reservas</h1>
       <div className="row">
         {reservations.map((reservation) => (
@@ -59,7 +66,7 @@ function UserReservations() {
                 <p className="card-text">Mesa: {reservation.table}</p>
                 <p className="card-text">Jugadores: {reservation.players}</p>
                 <p className="card-text">Estado: {reservation.status}</p>
-                <button className="btn btn-primary" onClick={() => handleSendInvitations(reservation)}>Enviar Invitaciones</button>
+                <button className="btn btn-primary" onClick={() => handleSendInvitations(reservation)}>Seleccionar compañeros</button>
               </div>
             </div>
           </div>

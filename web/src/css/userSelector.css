@@ -1,0 +1,62 @@
+/* Estilos generales para el modal */
+.modal-content {
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border: 1px solid #555;
+}
+
+.modal {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Botón de cierre del modal */
+.btn-close {
+    color: #aaa;
+    background-color: transparent;
+    border: none;
+}
+
+.btn-close:hover {
+    color: #f00;
+}
+
+/* Botones del footer del modal */
+.modal-footer .btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.modal-footer .btn:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para la lista de usuarios */
+.modal-body {
+    max-height: 400px; /* Altura máxima del cuerpo del modal */
+    overflow-y: auto; /* Barra de desplazamiento si es necesario */
+    padding: 15px; /* Espaciado interno */
+}
+
+.user-item {
+    display: flex; /* Alinea elementos horizontalmente */
+    align-items: center; /* Alinea verticalmente */
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+    transition: background-color 0.3s;
+}
+
+.user-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos para el avatar del usuario */
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover; /* Asegura que la imagen se ajuste al espacio */
+}

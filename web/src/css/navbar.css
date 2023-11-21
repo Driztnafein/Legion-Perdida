@@ -3,6 +3,7 @@
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Gradiente oscuro con naranja */
     border-radius: 10px;
     border: none;
+    
 }
 
 .navbar-custom .navbar-nav .nav-link,

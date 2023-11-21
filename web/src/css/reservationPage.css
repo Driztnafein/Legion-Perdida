@@ -5,6 +5,15 @@
     
 }
 
+.reservation-page .disabled-day {
+    cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+}
+
+.reservation-page .react-calendar__month-view__days__day--disabled {
+    cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+}
+
+
 .reservation-page .react-calendar__month-view__days__day.user-reserved-day {
     background-color: lightgreen; /* Color de fondo para días reservados por el usuario actual */
     color: white; /* Color del texto */
@@ -34,6 +43,7 @@
     background: #555; /* Fondo al pasar el ratón */
     color: #f90; /* Letra naranja al pasar el ratón */
 }
+
 
 .reservation-page .react-calendar__tile--active,
 .reservation-page .react-calendar__tile--active:enabled:hover,

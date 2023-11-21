@@ -1,12 +1,27 @@
-.card-img-top {
+.user-reservations .card-img-top {
   height: 200px; /* Altura fija */
   object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+  border-radius: 10px; /* Borde redondeado */
+  overflow: hidden; /* Elimina las esquinas del borde */
+  margin-bottom: 30px; /* Margen inferior */
+  border: none; /* Quita el borde */
+  background-color: black;
+
 }
-.card {
+
+.user-reservations .card {
   height: 100%; /* Hace que todas las tarjetas tengan la misma altura */
+  border-radius: 10px; /* Borde redondeado */
+  overflow: hidden; /* Elimina las esquinas del borde */
+  margin-bottom: 30px; /* Margen inferior */
+  background-color: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  
+
 }
-.card-deck {
+
+.user-reservations .card-deck {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+
 }
