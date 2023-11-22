@@ -21,7 +21,7 @@ const sendInvitationEmail = (email, reservationDetails) => {
   const reservationTime = new Date(reservationDetails.startTime).toLocaleTimeString('es-ES');
 
   const mailOptions = {
-    from: process.env.ETHEREAL_USER, // Utiliza el email de autenticación como remitente
+    from: process.env.ETHEREAL_USER,
     to: email,
     subject: 'Llamada a las armas',
     text: `Has sido convocado para  ${reservationDetails.duration} horas aproximadamente. Fecha: ${reservationDate}, Hora: ${reservationTime}, Mesa: ${reservationDetails.table}. Esperamos verte allí!`,

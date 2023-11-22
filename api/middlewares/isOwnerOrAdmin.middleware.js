@@ -8,7 +8,7 @@ module.exports.isOwnerOrAdmin = (req, res, next) => {
             if (!reservation) {
                 return next(createError(404, 'Reservation not found'));
             }
-            // Asegúrate de que req.user está definido
+           
             if (req.user && (reservation.user._id.toString() === req.user._id.toString() || req.user.role === 'ADMIN')) {
                 next();
             } else {
