@@ -35,3 +35,31 @@
 .logout-btn:hover {
     color: #ffa07a; /* Naranja más claro al pasar el mouse */
 }
+
+
+.navbar-custom .dropdown button {
+    position: relative;
+    overflow: hidden; /* Previene que el tamaño de la imagen afecte el flujo del documento */
+    padding-left: 75px; /* Espacio para la imagen del avatar */
+    height: 50px; /* Altura del botón para mantener la navbar sin cambios */
+}
+
+/* Estilo para la imagen del avatar */
+.navbar-custom .dropdown-toggle img {
+    position: absolute; /* Posición absoluta respecto al botón */
+    top: 50%;
+    left: 10px; /* Alineación a la izquierda dentro del botón */
+    transform: translateY(-50%); /* Centrado vertical */
+    width: 50px; /* Tamaño visible del avatar dentro del botón */
+    height: 50px; /* Mantener la proporción */
+    object-fit: cover;
+    
+    z-index: 1000; /* Asegurar que la imagen esté sobre otros elementos */
+}
+
+/* Estilo para el texto dentro del botón, para prevenir que se solape con la imagen del avatar */
+.navbar-custom .dropdown-toggle {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

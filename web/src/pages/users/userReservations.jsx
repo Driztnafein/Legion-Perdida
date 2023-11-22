@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../../services/api-service";
-import UserSelector from "../../../components/user.selector"; // Importar el nuevo componente
+import UserSelector from "../../../components/user.selector"; 
 import { sendUserInvitations } from "../../services/api-service";
 import "../../css/userReservations.css";
 
@@ -31,18 +31,18 @@ const handleUserSelection = (selectedUsers) => {
     sendUserInvitations(currentReservation.id, selectedUsers)
       .then(response => {
         console.log('Invitaciones enviadas', response.data);
-        setIsInvitationSent(true); // Actualiza el estado para mostrar el mensaje
-        // Puedes restablecer el mensaje después de un tiempo
+        setIsInvitationSent(true); 
+       
         setTimeout(() => setIsInvitationSent(false), 3000);
       })
       .catch(error => {
         console.error('Error al enviar invitaciones', error);
-        // Manejar el error
+       
       });
     setShowUserSelector(false);
   } else {
     console.error('No hay una reserva seleccionada');
-    // Manejar este error en la UI si es necesario
+    
   }
 };
 

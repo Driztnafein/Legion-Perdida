@@ -1,7 +1,5 @@
 /* Estilos específicos para la sección "¿Quiénes somos?" */
-.home-page {
-    
-}
+
    
 .home-page .who-we-are-section {
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Gradiente oscuro con naranja */
@@ -33,13 +31,18 @@
     overflow: hidden; /* Elimina las esquinas del borde */
     margin-bottom: 30px; /* Margen inferior */
     border: none; /* Quita el borde */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza las transiciones de transformación y sombra */
 }
 
 .home-page .card-img-top {
-    height: 200px; /* Altura fija */
+    width: 100%; /* Asegura que la imagen cubra el ancho completo */
+    height: auto; /* Altura automática para mantener la proporción */
     object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
-    margin-bottom: 15px;
-    margin-top: 20px;
+}
+
+.home-page .card:hover {
+    transform: scale(1.03); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Añade sombra para resaltar */
 }
 
 .home-page .card-title {

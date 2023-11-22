@@ -28,7 +28,7 @@ function Navbar() {
                         {user ? (
                             <div className="dropdown">
                                 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src={user.avatar} alt="avatar" className="rounded-circle me-2" style={{ width: '30px', height: '30px' }} />
+                                    <img src={user.avatar} alt="avatar" className="rounded-circle me-2"  />
                                     {user.name}
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">

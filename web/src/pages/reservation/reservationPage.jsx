@@ -36,7 +36,7 @@ function ReservationPage() {
                     const date = new Date(d);
                     return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
                 });
-                setGameAvailabilityDates(dates); // Aquí cambiamos a setGameAvailabilityDates
+                setGameAvailabilityDates(dates);
             })
             .catch(error => {
                 console.error("Error al obtener la disponibilidad del juego:", error);
@@ -48,7 +48,7 @@ function ReservationPage() {
                     const date = new Date(d);
                     return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
                 });
-                setUserReservationDates(dates); // Aquí cambiamos a setUserReservationDates
+                setUserReservationDates(dates);
             })
             .catch(error => {
                 console.error("Error al obtener las fechas de reserva del usuario:", error);
@@ -97,7 +97,7 @@ function ReservationPage() {
     };
 
     function ReservationPage() {
-        // ...
+
 
         const getDayClassName = (date) => {
             if (userReservationDates.includes(date)) {
@@ -109,7 +109,6 @@ function ReservationPage() {
             }
         }
 
-        // ...
     }
 
     const handleSubmit = async () => {
@@ -133,9 +132,12 @@ function ReservationPage() {
 
         try {
             const response = await createReservation(reservationDetails);
-            // Continúa con tu lógica después de una reserva exitosa
+            setIsReservationSuccess(true);
+            setReservationId(response.data.id);
+
         } catch (error) {
             console.error("Error al crear la reserva:", error);
+            // Maneja el error mostrando un mensaje al usuario
         }
     };
 
@@ -152,8 +154,8 @@ function ReservationPage() {
 
     const formatDate = (date) => {
         const year = date.getFullYear();
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Asegura que el mes siempre tenga dos dígitos
-        const day = ('0' + date.getDate()).slice(-2); // Asegura que el día siempre tenga dos dígitos
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
         return `${year}-${month}-${day}`;
     }
 
@@ -163,20 +165,13 @@ function ReservationPage() {
         const isGameReserved = gameAvailabilityDates.map(formatDate).includes(formattedDate);
 
         if (isUserReserved) {
-            return 'user-reserved-day disabled-day'; // Combina las clases para días reservados por el usuario y deshabilitados
+            return 'user-reserved-day disabled-day';
         } else if (isGameReserved) {
-            return 'other-reserved-day disabled-day'; // Combina las clases para días reservados por otros y deshabilitados
+            return 'other-reserved-day disabled-day';
         } else {
             return '';
         }
     };
-
-
-
-
-
-
-
 
     return (
         <div className="reservation-page">
@@ -247,12 +242,14 @@ function ReservationPage() {
             <div className="button-container">
                 <button onClick={handleSubmit} className="create-reservation-button">Crear reserva</button>
             </div>
-            {isReservationSuccess && (
-                <div style={{ marginTop: '20px', backgroundColor: 'lightgreen', padding: '10px', textAlign: 'center' }}>
-                    <p>¡Reserva creada con éxito!</p>
-                    <button onClick={handleViewReservation}>Ver Reserva</button>
-                </div>
-            )}
+            {
+                isReservationSuccess && (
+                    <div className="reservation-success-message">
+                        <p>¡Reserva creada con éxito!</p>
+                        <button onClick={() => navigate('/user/reservations')}>Ver mis reservas</button>
+                    </div>
+                )
+            }
         </div>
 
 
